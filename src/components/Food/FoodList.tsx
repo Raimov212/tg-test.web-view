@@ -18,6 +18,10 @@ const FoodList = ({ item }: { item: FoodDataType }) => {
   const dispatch = useAppDispatch();
   const foodListStore = useAppSelector((state) => state.restore.foodList);
 
+  useEffect(() => {
+    tg.MainButton.show();
+  }, [foodListStore, tg.MainButton]);
+
   const onSendData = useCallback(() => {
     tg.sendData(JSON.stringify(foodListStore));
   }, [foodListStore, tg]);
