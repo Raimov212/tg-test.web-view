@@ -3,23 +3,21 @@ import FoodList from "./FoodList";
 import { useParams } from "react-router-dom";
 import { useAppSelector } from "../../hook/redux";
 import FoodImg from "../../assets/food.jpg";
-import {
-  foodListType,
-  restoreListType,
-} from "../../redux/restoreRedux/restoreSliceType";
+import { foodListType } from "../../redux/restoreRedux/restoreSliceType";
+import { DataType } from "../../data/data";
 
 const Food = () => {
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const { id } = useParams();
-  const restoreData: restoreListType[] = useAppSelector(
-    (state) => state.restore.restoreList
-  );
-  const foodListStore: foodListType[] = useAppSelector(
-    (state) => state.restore.foodList
-  );
+  const restoreData = useAppSelector((state) => state.restore.restoreList[0]);
+  const foodListStore = useAppSelector((state) => state.restore.foodList);
+
+  const newRestoreData = restoreData as unknown as DataType[];
+
+  const newFoodListProps = foodListStore as unknown as foodListType[];
+  const newFoodListAllPrice = foodListStore as unknown as foodListType;
 
   console.log("foodListStore", foodListStore);
-
   function AllPrice(data: foodListType) {
     const allPrice: number = data.reduce(
       (acc: number, item: foodListType) => acc + item.price * item.quantity,
@@ -29,8 +27,8 @@ const Food = () => {
   }
 
   useEffect(() => {
-    AllPrice(foodListStore);
-  }, [foodListStore]);
+    AllPrice(newFoodListAllPrice);
+  });
 
   return (
     <div className="w-screen h-screen overflow-y-scroll flex flex-col items-center p-4">
@@ -38,16 +36,16 @@ const Food = () => {
         className="text-white border-2 border-red-500 px-4 rounded-lg"
         onClick={() => setIsVisible((prev) => !prev)}
       >
-        store({foodListStore.length})
+        store({newFoodListProps.length})
       </button>
       <div className="text-white">
-        Total : {AllPrice(foodListStore)}.000 so'm
+        Total : {AllPrice(newFoodListAllPrice)}.000 so'm
       </div>
       {isVisible && (
         <div className="w-[400px] h-[500px] fixed top-20 right-4 overflow-hidden">
           <div className="bg-black opacity-90 top-0 right-0 w-full h-full"></div>
           <div className="h-full absolute top-0 ml-[15%] py-4 px-4 overflow-y-auto">
-            {foodListStore?.map((item) => (
+            {newFoodListProps?.map((item) => (
               <div
                 className="flex flex-col items-center relative mb-4"
                 key={item.id}
@@ -73,8 +71,8 @@ const Food = () => {
         </div>
       )}
       <div className="grid grid-cols-2 w-96">
-        {restoreData[0].map(
-          (item: { id: string | undefined; data: foodListType[] }) =>
+        {newRestoreData.map(
+          (item) =>
             item.id === id &&
             item.data?.map((item) => (
               <React.Fragment key={item.id}>

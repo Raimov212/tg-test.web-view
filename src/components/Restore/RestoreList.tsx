@@ -3,9 +3,8 @@ import RestoreImg from "../../assets/restore.jpg";
 import { memo } from "react";
 
 interface RestoreDataType {
-  [key: string]: string;
   id: string;
-  restoreName: string;
+  restoreName?: string;
 }
 
 const RestoreList = memo(({ item }: { item: RestoreDataType }) => {
@@ -20,7 +19,7 @@ const RestoreList = memo(({ item }: { item: RestoreDataType }) => {
         className="object-cover rounded-lg h-36"
       />
       <p className="text-white text-center group-hover:text-blue-400">
-        {item?.restoreName}
+        {item.restoreName}
       </p>
     </Link>
   );

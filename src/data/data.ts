@@ -5,13 +5,13 @@ interface RestoreDataType {
   quantity: number;
 }
 
-interface DataType {
+export interface DataType {
   id: string;
   restoreName: string;
   data: RestoreDataType[];
 }
 
-export const Data: DataType[] = [
+export const Data = [
   {
     id: "1",
     restoreName: "Restore_1",

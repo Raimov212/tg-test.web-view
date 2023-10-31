@@ -23,7 +23,8 @@
   "include": [
     "src",
     "postcss.config.js",
-    "node_modules/browserslist/postcss.config.js"
+    "node_modules/browserslist/postcss.config.js",
+    "index.d.ts"
   ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

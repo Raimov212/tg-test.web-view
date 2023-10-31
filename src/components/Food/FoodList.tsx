@@ -6,7 +6,14 @@ import { handleIncrementStoreFood } from "../../redux/restoreRedux/restoreSlice"
 import { foodListType } from "../../redux/restoreRedux/restoreSliceType";
 import { useTelegram } from "../../hook/useTelegram";
 
-const FoodList = ({ item }: { item: foodListType }) => {
+interface FoodDataType {
+  id: string;
+  foodName: string;
+  price: number;
+  quantity: number;
+}
+
+const FoodList = ({ item }: { item: FoodDataType }) => {
   const { tg } = useTelegram();
   const dispatch = useAppDispatch();
   const foodListStore = useAppSelector((state) => state.restore.foodList);
